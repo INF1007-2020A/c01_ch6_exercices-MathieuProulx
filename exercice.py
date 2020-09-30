@@ -24,16 +24,34 @@ def contains_doubles(items: list) -> bool:
 
 
 def best_grades(student_grades: dict) -> tuple:
-    # TODO: Retourner un dictionnaire contenant le nom de l'étudiant ayant la meilleure moyenne ainsi que sa moyenne
-    return "", 0.0
+    list_student, list_grades = [], []
+    nom, note = None, None 
+
+    for student in student_grades:
+        student_grades[student] = sum(student_grades[student]) / len(student_grades[student])
+        list_student.append(student)
+        list_grades.append(student_grades[student])
+
+    for student in range(len(list_student)):
+        if list_grades[student] > list_grades[student - 1]:
+            nom = list_student[student]
+            note = list_grades[student]
+    return nom, note
 
 
 def histogram(sentence: str) -> tuple:
-    # TODO: Créer l'histogramme a l'aide d'un dictionnaire
-    #       Afficher l'histogramme et les lettres les plus fréquentes
-    #       Retourner l'histogramme et le tableau de lettres
+    histo = {}
 
-    return {}, []
+    for letter in sentence:
+        if letter in histo:
+            histo[letter] +=1
+        else:
+            histo[letter] = 1
+    
+    most_frequent_chars = [k for k, v in histo.items() if v > 5 and k != " "]
+    
+    
+    return histo, most_frequent_chars
 
 
 def get_recipes():
@@ -47,18 +65,21 @@ def print_recipe(ingredients) -> None:
 
 
 def main() -> None:
-    print(f"On essaie d'ordonner les valeurs...")
-    order()
+    # print(f"On essaie d'ordonner les valeurs...")
+    # order()
 
-    print(f"On vérifie les anagrammes...")
-    anagrams()
+    # print(f"On vérifie les anagrammes...")
+    # anagrams()
 
-    my_list = [3, 3, 5, 6, 1, 1]
-    print(f"Ma liste contient-elle des doublons? {contains_doubles(my_list)}")
+    # my_list = [3, 3, 5, 6, 1, 1]
+    # print(f"Ma liste contient-elle des doublons? {contains_doubles(my_list)}")
 
     grades = {"Bob": [90, 65, 20], "Alice": [85, 75, 83]}
     name, result = best_grades(grades)
     print(f"{name} a la meilleure moyenne: {result}")
+
+    sentence = input("Donnez une phrase: ")
+    histogram(sentence)
     
     print("On enregistre les recettes...")
     recipes = get_recipes()
